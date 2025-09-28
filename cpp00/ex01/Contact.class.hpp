@@ -6,40 +6,45 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:40:40 by anpicard          #+#    #+#             */
-/*   Updated: 2025/07/24 13:05:52 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/09/28 12:20:32 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACT_HPP
-# define CONTACT_HPP
+#ifndef CONTACT_CLASS_HPP
+# define CONTACT_CLASS_HPP
 
-# include <iostream>
 # include <string>
 
-class Contact
-{
+class Contact {
+
 private:
-	std::string firstName;
+    std::string firstName;
     std::string lastName;
     std::string nickname;
     std::string phoneNumber;
     std::string darkestSecret;
+
 public:
-	void setFirstName(std::string fname);
-	void setlastName(std::string lname);
-	void setnickname(std::string nname);
-	void setphoneNumber(std::string pnumber);
-	void setdarkestSecret(std::string dsecret);
-
-	void getFirstName();
-	void getlastName();
-	void getnickname();
-	void getphoneNumber();
-	void getdarkestSecret();
-
-	Contact(void);
-	~Contact(void);
+    Contact(void);
+    ~Contact(void);
+    
+    // Setters
+    void setFirstName(const std::string &firstName);
+    void setLastName(const std::string &lastName);
+    void setNickname(const std::string &nickname);
+    void setPhoneNumber(const std::string &phoneNumber);
+    void setDarkestSecret(const std::string &darkestSecret);
+    
+    // Getters
+    std::string getFirstName(void) const;
+    std::string getLastName(void) const;
+    std::string getNickname(void) const;
+    std::string getPhoneNumber(void) const;
+    std::string getDarkestSecret(void) const;
+    
+    // Utility functions
+    bool isEmpty(void) const;
+    void displayContact(void) const;
 };
-
 
 #endif
