@@ -6,11 +6,11 @@
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:41:09 by anpicard          #+#    #+#             */
-/*   Updated: 2025/09/28 12:21:14 by anpicard         ###   ########.fr       */
+/*   Updated: 2025/10/09 15:40:55 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Contact.class.hpp"
+#include "Contact.hpp"
 #include <iostream>
 #include <iomanip>
 
@@ -30,7 +30,7 @@ void Contact::setLastName(const std::string &lastName) {
     this->lastName = lastName;
 }
 
-void Contact::setNickname(const std::string &nickname) {
+void Contact::setNickName(const std::string &nickname) {
     this->nickname = nickname;
 }
 
@@ -61,19 +61,4 @@ std::string Contact::getPhoneNumber(void) const {
 std::string Contact::getDarkestSecret(void) const {
     return this->darkestSecret;
 }
-
-bool Contact::isEmpty(void) const {
-    return (this->firstName.empty() && this->lastName.empty() && 
-            this->nickname.empty() && this->phoneNumber.empty() && 
-            this->darkestSecret.empty());
-}
-
-void Contact::displayContact(void) const {
-    std::cout << "First Name: " << this->firstName << std::endl;
-    std::cout << "Last Name: " << this->lastName << std::endl;
-    std::cout << "Nickname: " << this->nickname << std::endl;
-    std::cout << "Phone Number: " << this->phoneNumber << std::endl;
-    std::cout << "Darkest Secret: " << this->darkestSecret << std::endl;
-}
-
 

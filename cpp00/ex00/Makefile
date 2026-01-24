@@ -3,18 +3,24 @@ FLAGS = -Wall -Wextra -Werror -std=c++98
 
 NAME = megaphone
 
-FILES = megaphone.cpp
+SOURCES = megaphone.cpp
 
-all:$(NAME)
+OBJECTS = $(SOURCES:.cpp=.o)
 
-$(NAME): $(FILES) Makefile
-	$(C++) $(FLAGS) $(FILES) -o $(NAME)
+all: $(NAME)
+
+$(NAME): $(OBJECTS)
+	$(C++) $(FLAGS) $(OBJECTS) -o $(NAME)
+
+%.o: %.cpp Makefile
+	$(C++) $(FLAGS) -c $< -o $@
 
 
 clean:
-	rm -f $(NAME)
+	rm -f $(OBJECTS)
 
 fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
 
