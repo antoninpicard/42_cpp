@@ -26,7 +26,7 @@ END						:=				\033[0m
 
 
 #	EXECUTABLE
-NAME					:=				violence
+NAME					:=				megaphone
 
 
 #	COMPILERS
@@ -45,9 +45,7 @@ CXXFLAGS				:=				$(FLAGS) $(DEPFLAGS) -std=c++98
 
 
 #	SOURCES AND HEADERS
-SRCS					:=				HumanA.cpp HumanB.cpp main.cpp Weapon.cpp 
-
-INCS					:=				HumanA.hpp HumanB.hpp Weapon.hpp 
+SRCS					:=				megaphone.cpp
 
 
 #	OBJECTS AND DEPENDENCIES
