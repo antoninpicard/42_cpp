@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   Brain.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 10:16:30 by anpicard          #+#    #+#             */
-/*   Updated: 2026/01/28 09:23:10 by anpicard         ###   ########.fr       */
+/*   Created: 2026/01/16 10:02:00 by anpicard          #+#    #+#             */
+/*   Updated: 2026/02/13 10:09:00 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#ifndef BRAIN_HPP
+#define BRAIN_HPP
 
-# include <string>
-# include <iostream>
+#include <iostream>
+#include <string>
 
-class Zombie {
-
+class Brain {
 private:
-	std::string _name;
+    std::string _ideas[100];
 
 public:
-	Zombie(std::string name);
-	~Zombie(void);
-	
-	void announce(void);
-};
+    Brain();
+    Brain(const Brain& other);
+    Brain& operator=(const Brain& other);
+    ~Brain();
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+    void setIdea(int index, const std::string& idea);
+    std::string getIdea(int index) const;
+};
 
 #endif

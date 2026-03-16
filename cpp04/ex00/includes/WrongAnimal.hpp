@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   WrongAnimal.hpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 10:16:30 by anpicard          #+#    #+#             */
-/*   Updated: 2026/01/28 09:23:10 by anpicard         ###   ########.fr       */
+/*   Created: 2026/01/16 10:02:00 by anpicard          #+#    #+#             */
+/*   Updated: 2026/02/13 10:07:21 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#ifndef WRONGANIMAL_HPP
+#define WRONGANIMAL_HPP
 
-# include <string>
-# include <iostream>
+#include <iostream>
+#include <string>
 
-class Zombie {
-
-private:
-	std::string _name;
+class WrongAnimal {
+protected:
+    std::string _type;
 
 public:
-	Zombie(std::string name);
-	~Zombie(void);
-	
-	void announce(void);
-};
+    WrongAnimal();
+    WrongAnimal(const WrongAnimal& other);
+    WrongAnimal& operator=(const WrongAnimal& other);
+    ~WrongAnimal();
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+    void makeSound() const;
+    std::string getType() const;
+};
 
 #endif

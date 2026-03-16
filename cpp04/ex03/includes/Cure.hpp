@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.hpp                                         :+:      :+:    :+:   */
+/*   Cure.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anpicard <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/11 10:16:30 by anpicard          #+#    #+#             */
-/*   Updated: 2026/01/28 09:23:10 by anpicard         ###   ########.fr       */
+/*   Created: 2026/01/24 10:05:00 by anpicard          #+#    #+#             */
+/*   Updated: 2026/02/13 09:18:40 by anpicard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ZOMBIE_HPP
-# define ZOMBIE_HPP
+#ifndef CURE_HPP
+#define CURE_HPP
 
-# include <string>
-# include <iostream>
+#include "AMateria.hpp"
+#include "ICharacter.hpp"
 
-class Zombie {
-
-private:
-	std::string _name;
-
+class Cure : public AMateria {
 public:
-	Zombie(std::string name);
-	~Zombie(void);
-	
-	void announce(void);
-};
+    Cure();
+    Cure(const Cure& other);
+    Cure& operator=(const Cure& other);
+    ~Cure();
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+    AMateria* clone() const;
+    void use(ICharacter& target);
+};
 
 #endif

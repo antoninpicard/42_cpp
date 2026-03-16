@@ -6,7 +6,7 @@
 #    By: anpicard <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/04 13:17:48 by anpicard          #+#    #+#              #
-#    Updated: 2026/01/27 12:55:10 by anpicard         ###   ########.fr        #
+#    Updated: 2026/02/13 09:00:16 by anpicard         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,11 @@ DIR_DEPS				:=				.deps
 #	FLAGS
 FLAGS					:=				-Wall -Wextra -Werror -g3
 DEPFLAGS				:=				-MMD -MP
-CXXFLAGS				:=				$(FLAGS) $(DEPFLAGS) -std=c++98
+CXXFLAGS				:=				$(FLAGS) $(DEPFLAGS) -std=c++98 -I includes
 
 
 #	SOURCES AND HEADERS
-SRCS					:=				AMateria.cpp Character.cpp Cure.cpp Ice.cpp main.cpp MateriaSource.cpp 
+SRCS					:=				src/AMateria.cpp src/Character.cpp src/Cure.cpp src/Ice.cpp src/main.cpp src/MateriaSource.cpp 
 
 INCS					:=				AMateria.hpp Character.hpp Cure.hpp Ice.hpp ICharacter.hpp IMateriaSource.hpp MateriaSource.hpp 
 
@@ -67,7 +67,7 @@ all:
 
 
 #	COMPILE MAIN RULE
-$(DIR_OBJS)/%.o:						%.cpp Makefile
+$(DIR_OBJS)/%.o:						src/%.cpp Makefile
 											@mkdir -p $(DIR_OBJS) $(DIR_DEPS)
 											@$(CXX) $(CXXFLAGS) -c $< -o $@
 											@mv $(DIR_OBJS)/$(notdir $(basename $@)).d $(DIR_DEPS)/ 2>/dev/null || true
