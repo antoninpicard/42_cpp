@@ -2,7 +2,7 @@
 #  Configuration
 # ============================================================
 
-NAME        := calculate
+NAME        := RPN
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -g3 -std=c++98 -MMD -MP -Iinc
 

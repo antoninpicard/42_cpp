@@ -13,6 +13,7 @@ class PmergeMe
 		std::deque<int>		_deq;
 		void 				printSequence();
 		std::vector<int> 	buildJacobsthal(int size);
+		void 				mergeInsertVec(std::vector<int>& seq);
 	public:
 		PmergeMe();
 		PmergeMe(const std::vector<int>& vec);
