@@ -26,7 +26,7 @@ public:
 	void				decrementGrade();
 
 	void signForm(AForm &form);
-	void executeForm(AForm &form);
+	void executeForm(AForm const &form) const;
 
 	class GradeTooHighException : public std::exception
 	{
@@ -40,5 +40,7 @@ public:
 			const char* what() const throw();
 	};
 };
+
+std::ostream& operator<<(std::ostream& os, Bureaucrat const& b);
 
 #endif

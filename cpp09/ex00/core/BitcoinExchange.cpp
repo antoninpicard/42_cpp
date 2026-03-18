@@ -80,6 +80,11 @@ void BitcoinExchange::processInput(const std::string &filename) const
     float       price;
 
     std::ifstream file(filename.c_str());
+    if (!file.is_open())
+    {
+        std::cout << "Error: could not open file." << std::endl;
+        return ;
+    }
     std::getline(file, line);
     if (line.find("date | value") == std::string::npos)
     {

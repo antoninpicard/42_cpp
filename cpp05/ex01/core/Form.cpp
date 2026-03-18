@@ -3,10 +3,10 @@
 
 // --------------Construction----------------
 
-Form::Form() : _name("Default"), _gradeToSigned(150), _gradeToExecute(150)
+Form::Form() : _name("Default"), _gradeToSigned(150), _gradeToExecute(150), _isSigned(false)
 {}
 
-Form::Form(std::string const &name, int gradeToSign, int gradeToExecute) : _name(name), _gradeToSigned(gradeToSign), _gradeToExecute(gradeToExecute)
+Form::Form(std::string const &name, int gradeToSign, int gradeToExecute) : _name(name), _gradeToSigned(gradeToSign), _gradeToExecute(gradeToExecute), _isSigned(false)
 {
 	if (_gradeToSigned < 1 || _gradeToExecute < 1)
 		throw Form::GradeTooHighException();
@@ -14,7 +14,7 @@ Form::Form(std::string const &name, int gradeToSign, int gradeToExecute) : _name
 		throw Form::GradeTooLowException();
 }
 
-Form::Form(const Form& other) : _name(other._name), _gradeToSigned(other._gradeToSigned), _gradeToExecute(other._gradeToExecute)
+Form::Form(const Form& other) : _name(other._name), _gradeToSigned(other._gradeToSigned), _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned)
 {
 	if (_gradeToSigned < 1 || _gradeToExecute < 1)
 		throw Form::GradeTooHighException();

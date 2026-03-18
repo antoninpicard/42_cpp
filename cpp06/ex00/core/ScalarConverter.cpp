@@ -35,9 +35,10 @@ static void writeChar(std::string const &literal)
 
 static void writeInt(std::string const &literal)
 {
-	long nb = strtol(literal.c_str(), NULL, 10);
+	char *endptr;
+	long nb = strtol(literal.c_str(), &endptr, 10);
 	
-	if (nb > std::numeric_limits<int>::max() || nb < std::numeric_limits<int>::min())
+	if (*endptr != '\0' || nb > std::numeric_limits<int>::max() || nb < std::numeric_limits<int>::min())
 	{
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
@@ -54,15 +55,17 @@ static void writeInt(std::string const &literal)
 	else
 		std::cout << "char: '" << c << "'" << std::endl;
 	std::cout << "int: " << i << std::endl;
-	std::cout << "float: " << static_cast<float>(i) << ".0f" << std::endl;
-	std::cout << "double: " << static_cast<double>(i) << ".0" << std::endl;
+	std::cout << std::fixed << std::setprecision(1);
+	std::cout << "float: " << static_cast<float>(i) << "f" << std::endl;
+	std::cout << "double: " << static_cast<double>(i) << std::endl;
 }
 
 static void writeFloat(std::string const &literal)
 {
-	float nb = strtof(literal.c_str(), NULL);
+	char *endptr;
+	float nb = strtof(literal.c_str(), &endptr);
 
-	if (literal.size() < 3)
+	if (*endptr != 'f' || *(endptr + 1) != '\0')
 	{
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
@@ -70,7 +73,7 @@ static void writeFloat(std::string const &literal)
 		std::cout << "double: impossible" << std::endl;
 		return ;
 	}
-	else if (std::isnan(nb) || std::isinf(nb))
+	if (std::isnan(nb) || std::isinf(nb))
 	{
 		std::cout << "char: impossible" << std::endl;
 		std::cout << "int: impossible" << std::endl;
@@ -84,27 +87,38 @@ static void writeFloat(std::string const &literal)
 			std::cout << "char: Non displayable" << std::endl;
 		else
 			std::cout << "char: '" << c << "'" << std::endl;
-		if (nb > std::numeric_limits<int>::max() || nb < std::numeric_limits<int>::min())
+		if (nb > static_cast<float>(std::numeric_limits<int>::max()) || nb < static_cast<float>(std::numeric_limits<int>::min()))
 			std::cout << "int: impossible" << std::endl;
 		else
 			std::cout << "int: " << static_cast<int>(nb) << std::endl;
 	}
-	if (nb == static_cast<int>(nb))
+	double d = static_cast<double>(nb);
+	if (!std::isnan(nb) && !std::isinf(nb) && nb == static_cast<long>(nb))
 	{
-		std::cout << "float: " << std::fixed << std::setprecision(1) << nb << "f" << std::endl;
-		std::cout << "double: " << std::fixed << std::setprecision(1) << nb << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << nb << "f" << std::endl;
+		std::cout << "double: " << d << std::endl;
 	}
 	else
 	{
 		std::cout << "float: " << nb << "f" << std::endl;
-		std::cout << "double: " << nb << std::endl;
+		std::cout << "double: " << d << std::endl;
 	}
 }
 
 static void writeDouble(std::string const &literal)
 {
-	double nb = strtod(literal.c_str(), NULL);
+	char *endptr;
+	double nb = strtod(literal.c_str(), &endptr);
 
+	if (*endptr != '\0')
+	{
+		std::cout << "char: impossible" << std::endl;
+		std::cout << "int: impossible" << std::endl;
+		std::cout << "float: impossible" << std::endl;
+		std::cout << "double: impossible" << std::endl;
+		return ;
+	}
 	if (std::isnan(nb) || std::isinf(nb))
 	{
 		std::cout << "char: impossible" << std::endl;
@@ -124,14 +138,15 @@ static void writeDouble(std::string const &literal)
 		else
 			std::cout << "int: " << static_cast<int>(nb) << std::endl;
 	}
-	if (nb == static_cast<int>(nb))
+	if (!std::isnan(nb) && !std::isinf(nb) && nb == static_cast<long>(nb))
 	{
-		std::cout << "float: " << std::fixed << std::setprecision(1) << nb << "f" << std::endl;
-		std::cout << "double: " << std::fixed << std::setprecision(1) << nb << std::endl;
+		std::cout << std::fixed << std::setprecision(1);
+		std::cout << "float: " << static_cast<float>(nb) << "f" << std::endl;
+		std::cout << "double: " << nb << std::endl;
 	}
 	else
 	{
-		std::cout << "float: " << nb << "f" << std::endl;
+		std::cout << "float: " << static_cast<float>(nb) << "f" << std::endl;
 		std::cout << "double: " << nb << std::endl;
 	}
 }
@@ -156,6 +171,8 @@ static void writePseudo(std::string const &literal)
 
 static eType detectType(std::string const &literal)
 {
+	if (literal.empty())
+		return (INT);
 	if (literal == "nan" || literal == "nanf" || literal == "+inf" || literal == "-inf" || literal == "+inff" || literal == "-inff")
         return (PSEUDO);
 	else if (literal.size() == 1 && !isdigit(literal[0]))

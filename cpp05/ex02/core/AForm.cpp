@@ -2,10 +2,10 @@
 #include "Bureaucrat.hpp"
 // --------------Construction----------------
 
-AForm::AForm() : _target("Default"), _name("Default"), _gradeToSigned(150), _gradeToExecute(150)
+AForm::AForm() : _target("Default"), _name("Default"), _gradeToSigned(150), _gradeToExecute(150), _isSigned(false)
 {}
 
-AForm::AForm(std::string const &target, std::string const &name, int gradeToSign, int gradeToExecute) : _target(target), _name(name), _gradeToSigned(gradeToSign), _gradeToExecute(gradeToExecute)
+AForm::AForm(std::string const &target, std::string const &name, int gradeToSign, int gradeToExecute) : _target(target), _name(name), _gradeToSigned(gradeToSign), _gradeToExecute(gradeToExecute), _isSigned(false)
 {
 	if (_gradeToSigned < 1 || _gradeToExecute < 1)
 		throw AForm::GradeTooHighException();
@@ -13,7 +13,7 @@ AForm::AForm(std::string const &target, std::string const &name, int gradeToSign
 		throw AForm::GradeTooLowException();
 }
 
-AForm::AForm(const AForm& other) :_target(other._target), _name(other._name), _gradeToSigned(other._gradeToSigned), _gradeToExecute(other._gradeToExecute)
+AForm::AForm(const AForm& other) :_target(other._target), _name(other._name), _gradeToSigned(other._gradeToSigned), _gradeToExecute(other._gradeToExecute), _isSigned(other._isSigned)
 {
 	if (_gradeToSigned < 1 || _gradeToExecute < 1)
 		throw AForm::GradeTooHighException();
