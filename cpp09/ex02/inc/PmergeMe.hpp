@@ -11,14 +11,17 @@ class PmergeMe
 	private:
 		std::vector<int>	_vec;
 		std::deque<int>		_deq;
+		void 				printSequence();
+		std::vector<int> 	buildJacobsthal(int size);
 	public:
 		PmergeMe();
-		PmergeMe(std::vector<int>& vec);
+		PmergeMe(const std::vector<int>& vec);
 		PmergeMe(const PmergeMe& other);
 		PmergeMe& operator=(const PmergeMe& other);
 		~PmergeMe();
 
 		void sort();
 };
+
 
 #endif

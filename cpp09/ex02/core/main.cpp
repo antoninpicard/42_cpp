@@ -13,6 +13,7 @@ int	main(int argc, char **argv)
 	std::vector<int> 	vec;
 	int 				i = 1;
 	long				valuesOfReturn;
+
 	while (i < argc)
 	{
 		errno = 0;
@@ -27,5 +28,7 @@ int	main(int argc, char **argv)
 		vec.push_back(static_cast<int>(valuesOfReturn));
 		i++;
 	}
+	PmergeMe pm(vec);
+	pm.sort();
 	return (0);
 }

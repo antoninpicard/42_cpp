@@ -2,7 +2,7 @@
 #  Configuration
 # ============================================================
 
-NAME        := calculate
+NAME        := pmergeme
 CXX         := c++
 CXXFLAGS    := -Wall -Wextra -Werror -g3 -std=c++98 -MMD -MP -Iinc
 
@@ -11,7 +11,7 @@ DIR_DEPS    := .deps
 
 CORE_DIR = core
 
-CORE        := $(CORE_DIR)/main.cpp $(CORE_DIR)/RPN.cpp
+CORE        := $(CORE_DIR)/main.cpp $(CORE_DIR)/PmergeMe.cpp
 
 OBJS        := $(addprefix $(DIR_OBJS)/, $(CORE:.cpp=.o))
 DEPS        := $(addprefix $(DIR_DEPS)/, $(CORE:.cpp=.d))
