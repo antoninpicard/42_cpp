@@ -1,4 +1,6 @@
+#include <iomanip>
 #include <algorithm>
+#include <sys/time.h>
 #include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe() : _vec(), _deq()
@@ -24,7 +26,7 @@ PmergeMe::~PmergeMe()
 {}
 
 
-// --------------------Methods--------------------
+// --------------------Ford-Johnson--------------------
 
 void PmergeMe::mergeInsertVec(std::vector<int>& seq)
 {
@@ -125,6 +127,9 @@ void PmergeMe::mergeInsertVec(std::vector<int>& seq)
 	seq = main_seq;
 }
 
+
+// ----------------------Jacobsthal-----------------------------
+
 std::vector<int> PmergeMe::buildJacobsthal(int size)
 {
 	// generate Jacobsthal sequence up to size
@@ -165,6 +170,8 @@ std::vector<int> PmergeMe::buildJacobsthal(int size)
 	return (result);
 }
 
+// --------------------------Methods--------------------------
+
 void PmergeMe::printSequence()
 {
 	std::vector<int>::iterator it = _vec.begin();
@@ -183,8 +190,14 @@ void PmergeMe::sort()
 	std::cout << "Before: ";
 	printSequence();
 
-	mergeInsertVec(_vec);
+	struct timeval start, end;
 
+	gettimeofday(&start, NULL);
+	mergeInsertVec(_vec);
+	gettimeofday(&end, NULL);
+
+	double time = (end.tv_sec - start.tv_sec) * 1000000.0 + (end.tv_usec - start.tv_usec);
 	std::cout << "After: ";
 	printSequence();
+	std::cout << "Time to process a range of " << _vec.size() << " elements with std::vector : " << std::fixed << std::setprecision(5) << time << " us" << std::endl;
 }
