@@ -128,7 +128,7 @@ void PmergeMe::mergeInsertVec(std::vector<int>& seq)
 }
 
 
-// ----------------------Jacobsthal-----------------------------
+// ------------------------Jacobsthal-----------------------------
 
 std::vector<int> PmergeMe::buildJacobsthal(int size)
 {
