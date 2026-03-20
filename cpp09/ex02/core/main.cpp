@@ -10,7 +10,7 @@ int	main(int argc, char **argv)
 		std::cerr << "Error" << std::endl;
 		return (1);
 	}
-	std::vector<int> 	vec;
+	std::vector<int> 	values;
 	int 				i = 1;
 	long				valuesOfReturn;
 
@@ -25,10 +25,10 @@ int	main(int argc, char **argv)
 			std::cerr << "Error" << std::endl;
 			return (1);
 		}
-		vec.push_back(static_cast<int>(valuesOfReturn));
+		values.push_back(static_cast<int>(valuesOfReturn));
 		i++;
 	}
-	PmergeMe pm(vec);
+	PmergeMe pm(values);
 	pm.sort();
 	return (0);
 }

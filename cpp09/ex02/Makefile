@@ -4,7 +4,7 @@
 
 NAME        := PmergeMe
 CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -g3 -std=c++98 -MMD -MP -Iinc
+CXXFLAGS    := -Wall -Wextra -Werror -O2 -std=c++98 -MMD -MP -Iinc
 
 DIR_OBJS    := .objs
 DIR_DEPS    := .deps

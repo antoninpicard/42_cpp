@@ -13,16 +13,19 @@ class PmergeMe
 		std::deque<int>		_deq;
 		void 				printSequence();
 		std::vector<int> 	buildJacobsthal(int size);
+		std::deque<int> 	buildJacobsthalDeque(int size);
+
 		void 				mergeInsertVec(std::vector<int>& seq);
+		void 				mergeInsertDeq(std::deque<int>& seq);
+
 	public:
 		PmergeMe();
-		PmergeMe(const std::vector<int>& vec);
+		PmergeMe(const std::vector<int>& values);
 		PmergeMe(const PmergeMe& other);
 		PmergeMe& operator=(const PmergeMe& other);
 		~PmergeMe();
 
 		void sort();
 };
-
 
 #endif
