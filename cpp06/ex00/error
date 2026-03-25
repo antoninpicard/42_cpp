@@ -1,0 +1,17 @@
+➜  ex00 make
+Compiled: core/ScalarConverter.cpp
+Compiled: core/main.cpp
+Linked: scalar_converter
+➜  ex00 ./scalar_converter ^M 
+'har: '
+int: 13
+float: 13.0f
+double: 13.0
+➜  ex00 ./scalar_converter "   
+"
+char: '
+'
+int: 10
+float: 10.0f
+double: 10.0
+➜  ex00 
