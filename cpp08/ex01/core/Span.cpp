@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include <algorithm>
+#include <stdexcept>
 
 Span::Span() : _maxSize(0), _number(0)
 {}
@@ -38,27 +39,27 @@ void Span::addNumber(int n)
 int Span::shortestSpan()
 {
     if (_number.size() < 2)
-        throw std::exception();
+        throw std::runtime_error("Not enough elements to compute span (need at least 2)");
     
     std::vector<int> sorted = _number;
     std::sort(sorted.begin(), sorted.end());
     
-    int minDiff = sorted[1] - sorted[0];
+    long minDiff = (long)sorted[1] - (long)sorted[0];
     for (size_t i = 1; i < sorted.size(); i++)
     {
-        int diff = sorted[i] - sorted[i - 1];
+        long diff = (long)sorted[i] - (long)sorted[i - 1];
         if (diff < minDiff)
             minDiff = diff;
     }
-    return (minDiff);
+    return (static_cast<int>(minDiff));
 }
 
 int Span::longestSpan()
 {
     if (_number.size() < 2)
-        throw std::exception();
+        throw std::runtime_error("Not enough elements to compute span (need at least 2)");
     
     int min = *std::min_element(_number.begin(), _number.end());
     int max = *std::max_element(_number.begin(), _number.end());
-    return (max - min);
+    return (static_cast<int>((long)max - (long)min));
 }

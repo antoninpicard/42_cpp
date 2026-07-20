@@ -7,7 +7,7 @@ int	main(int argc, char **argv)
 {
 	if (argc == 1)
 	{
-		std::cerr << "Error" << std::endl;
+		std::cerr << "Error: no arguments provided. Usage: ./PmergeMe <positive integers>" << std::endl;
 		return (1);
 	}
 	std::vector<int> 	values;
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		valuesOfReturn = std::strtol(argv[i], &endptr, 10);
 		if (*endptr != '\0' || errno == ERANGE || valuesOfReturn <= 0 || valuesOfReturn > INT_MAX)
 		{
-			std::cerr << "Error" << std::endl;
+			std::cerr << "Error: invalid argument '" << argv[i] << "': must be a positive integer" << std::endl;
 			return (1);
 		}
 		values.push_back(static_cast<int>(valuesOfReturn));

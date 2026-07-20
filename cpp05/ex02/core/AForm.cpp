@@ -63,7 +63,7 @@ bool AForm::getIsSigned() const
 void AForm::beSigned(Bureaucrat const &bureaucrat)
 {
 	if (bureaucrat.getGrade() > _gradeToSigned)
-		throw Bureaucrat::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	_isSigned = true;
 }
 
@@ -87,15 +87,15 @@ std::ostream& operator<<(std::ostream& os, AForm const& form)
 
 const char* AForm::GradeTooHighException::what() const throw()
 {
-    return "Grade is too high";
+    return "Grade is too high!";
 }
 
 const char* AForm::GradeTooLowException::what() const throw()
 {
-    return "Grade is too low";
+    return "Grade is too low!";
 }
 
 const char* AForm::FormNotSignedException::what() const throw()
 {
-	return "Form is'nt signed";
+	return "Form isn't signed!";
 }

@@ -2,6 +2,7 @@
 #include <sstream>
 #include <stack>
 #include <iostream>
+#include <climits>
 
 RPN::RPN()
 {}
@@ -19,52 +20,57 @@ RPN::~RPN()
 
 void RPN::calculate(const std::string &expression)
 {
-    std::stack<int>    stack;
+    std::stack<long>   stack;
     std::istringstream ss(expression);
     std::string        token;
-    int                a;
-    int                b;
+    long               a;
+    long               b;
+    long               result;
 
 	while (ss >> token)
 	{
 		if (token.size() == 1 && std::isdigit(token[0]))
-			stack.push(static_cast<int>(token[0] - '0'));
+			stack.push(static_cast<long>(token[0] - '0'));
 		else if (token.size() == 1 && (token[0] == '+' || token[0] == '-' || token[0] == '*' || token[0] == '/'))
 		{
 			if (stack.size() < 2)
 			{
-				std::cerr << "Error" << std::endl;
+				std::cerr << "Error: not enough operands for operator '" << token[0] << "'" << std::endl;
 				return ;
 			}
 			b = stack.top(); stack.pop();
 			a = stack.top(); stack.pop();
 			switch (token[0])
 			{
-				case '+': stack.push(a + b);
-					break;
-				case '-': stack.push(a - b);
-					break;
-			    case '*': stack.push(a * b);
-					break;
+				case '+': result = a + b; break;
+				case '-': result = a - b; break;
+			    case '*': result = a * b; break;
 				case '/':
-				if (b == 0)
-				{
-					std::cerr << "Error" << std::endl;
-					return ;
-				}
-				stack.push(a / b);
+					if (b == 0)
+					{
+						std::cerr << "Error: division by zero" << std::endl;
+						return ;
+					}
+					result = a / b;
 					break;
+				default: return ;
 			}
+			if (result > INT_MAX || result < INT_MIN)
+			{
+				std::cerr << "Error: overflow in expression" << std::endl;
+				return ;
+			}
+			stack.push(result);
 		}
 		else
 		{
-			std::cerr << "Error" << std::endl;
+			std::cerr << "Error: invalid token '" << token << "'" << std::endl;
 			return ;
 		}
 	}
 	if (stack.size() != 1)
 	{
-		std::cerr << "Error" << std::endl;
+		std::cerr << "Error: invalid expression, too many operands" << std::endl;
 		return ;
 	}
 	std::cout << stack.top() << std::endl;
