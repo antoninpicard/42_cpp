@@ -1,57 +1,102 @@
-# ============================================================
-#  Configuration
-# ============================================================
+#	MAKEFLAGS
+MAKEFLAGS				+=				--no-print-directory
 
-NAME        := RPN
-CXX         := c++
-CXXFLAGS    := -Wall -Wextra -Werror -g3 -std=c++98 -MMD -MP -Iinc
 
-DIR_OBJS    := .objs
-DIR_DEPS    := .deps
+#	COLORS
+ERASE					:=				\033[2K\r
+BLUE					:=				\033[34m
+YELLOW					:=				\033[33m
+GREEN					:=				\033[32m
+RED						:=				\033[31m
+END						:=				\033[0m
 
-CORE_DIR = core
 
-CORE        := $(CORE_DIR)/main.cpp $(CORE_DIR)/RPN.cpp
+#	EXECUTABLE
+NAME					:=				RPN
 
-OBJS        := $(addprefix $(DIR_OBJS)/, $(CORE:.cpp=.o))
-DEPS        := $(addprefix $(DIR_DEPS)/, $(CORE:.cpp=.d))
 
-# ============================================================
-#  Rules
-# ============================================================
+#	COMPILERS
+CXX						:=				c++
 
-.PHONY: all clean fclean re
 
-all: $(NAME)
+#	PROJECT DIRECTORIES
+DIR_SRCS				:=				core
+DIR_INCS				:=				inc
+DIR_OBJS				:=				.objs
+DIR_DEPS				:=				.deps
 
-$(NAME): $(OBJS)
-	@$(CXX) $(CXXFLAGS) $(OBJS) -o $@
-	@echo "Linked: $@"
 
-$(DIR_OBJS) $(DIR_DEPS):
-	@mkdir -p $@
+#	FLAGS
+FLAGS					:=				-Wall -Wextra -Werror -I$(DIR_INCS) -g3
+DEPFLAGS				:=				-MMD -MP
+CXXFLAGS				:=				$(FLAGS) $(DEPFLAGS) -std=c++98
 
-$(DIR_OBJS)/$(CORE_DIR)/%.o: $(CORE_DIR)/%.cpp Makefile | $(DIR_OBJS) $(DIR_DEPS)
-	@mkdir -p $(dir $@) $(patsubst $(DIR_OBJS)/%,$(DIR_DEPS)/%,$(dir $@))
-	@$(CXX) $(CXXFLAGS) -MF $(patsubst $(DIR_OBJS)/%.o,$(DIR_DEPS)/%.d,$@) -c $< -o $@
-	@echo "Compiled: $<"
 
--include $(DEPS)
+#	SOURCES AND HEADERS
+SRCS					:=				$(DIR_SRCS)/main.cpp \
+																				$(DIR_SRCS)/RPN.cpp
+INCS					:=				$(DIR_INCS)/RPN.hpp
 
-# ============================================================
-#  Cleaner
-# ============================================================
 
+#	OBJECTS AND DEPENDENCIES
+OBJS					:=				$(addprefix $(DIR_OBJS)/, $(notdir $(SRCS:.cpp=.o)))
+DEPS					:=				$(addprefix $(DIR_DEPS)/, $(notdir $(SRCS:.cpp=.d)))
+
+
+vpath	%.cpp $(DIR_SRCS)
+
+#	ALL RULE
+.PHONY:			all
+all:
+																@if $(MAKE) -q $(NAME); then \
+																	printf "$(YELLOW)$(NAME) > Nothing to be done$(END)\n"; \
+																else \
+																	$(MAKE) ${NAME}; \
+																fi;
+
+
+#	COMPILE CPP FILES RULE
+$(DIR_OBJS)/%.o:								%.cpp Makefile
+																@mkdir -p $(DIR_OBJS) $(DIR_DEPS)
+																@$(CXX) $(CXXFLAGS) -c $< -o $@
+																@mv $(DIR_OBJS)/$(notdir $(basename $@)).d $(DIR_DEPS)/ 2>/dev/null || true
+																@printf "$(BLUE)$(NAME) > Compiling : $(END)$<\n"
+
+
+#	LINKING
+${NAME}:												${OBJS}
+																@$(CXX) $(CXXFLAGS) $(OBJS) -o $@
+																@printf "$(GREEN)$(NAME) > Done Compiling : $(END)$@\n"
+
+
+#	INCLUDE DEPENDENCIES FILES
+-include	$(DEPS)
+
+
+#	CLEAN RULE
+.PHONY:			clean
 clean:
-	@if [ -d $(DIR_OBJS) ] || [ -d $(DIR_DEPS) ]; then \
-		rm -rf $(DIR_OBJS) $(DIR_DEPS); \
-		echo "Cleaned: $(DIR_OBJS) $(DIR_DEPS)"; \
-	fi
+																@if [ ! -d $(DIR_OBJS) ] && [ ! -d $(DIR_DEPS) ]; then \
+																	printf "$(RED)$(NAME) > Nothing to clean $(END)\n"; \
+																else \
+																	[ -d $(DIR_OBJS) ] && \
+																		rm -rf $(DIR_OBJS) && \
+																		printf "$(RED)$(NAME) > Done deleting : $(END)$(DIR_OBJS)\n"; \
+																	[ -d $(DIR_DEPS) ] && \
+																		rm -rf $(DIR_DEPS) && \
+																		printf "$(RED)$(NAME) > Done deleting : $(END)$(DIR_DEPS)\n"; \
+																fi; true
 
-fclean: clean
-	@if [ -f $(NAME) ]; then \
-		rm -f $(NAME); \
-		echo "Cleaned: $(NAME)"; \
-	fi
 
-re: fclean all
+#	FCLEAN RULE
+.PHONY:			fclean
+fclean:			clean
+																@if [ -f $(NAME) ]; then \
+																	rm -rdf $(NAME); \
+																	printf "$(RED)$(NAME) > Done deleting : $(END)$(NAME)\n"; \
+																fi;
+
+
+#	REBUILD RULE
+.PHONY:			re
+re:				fclean	all
